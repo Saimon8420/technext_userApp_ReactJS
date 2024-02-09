@@ -21,7 +21,21 @@ const DisplayUser = () => {
             try {
                 const data = await fetch("https://dummyjson.com/users?limit=100", { cache: "no-cache" });
                 const res = await data.json();
-                setUsers(res?.users || []);
+                // console.log(res?.users);
+
+                let allUser = [];
+                // modifying response
+                await res?.users?.map(each =>
+                    allUser.push({
+                        id: each?.id,
+                        name: each?.firstName + " " + each?.lastName,
+                        address: each?.address,
+                        image: each?.image,
+                        email: each?.email,
+                        company: each?.company?.name,
+                    })
+                )
+                setUsers(allUser);
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
@@ -42,7 +56,7 @@ const DisplayUser = () => {
                     name="searchValue"
                     id="searchValue"
                     className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 outline-none"
-                    placeholder="Search user by first/last name"
+                    placeholder="Search user by name"
                     value={searchVal}
                     onChange={(e) => setSearchVal(e.target.value)}
                 />
@@ -52,7 +66,7 @@ const DisplayUser = () => {
                 {
                     users
                         .filter((user) =>
-                            user?.firstName.toLowerCase().includes(searchVal.toLowerCase()) || user?.lastName.toLowerCase().includes(searchVal.toLowerCase())
+                            user?.name.toLowerCase().includes(searchVal.toLowerCase())
                         )
                         .map((user) => (
                             <UserInfo key={user?.id} value={user} />
