@@ -1,27 +1,23 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import UserInfo from "./UserInfo";
+import Loading from "../Loading/Loading";
 
 const DisplayUser = () => {
     // to set usersData
     const [users, setUsers] = useState([]);
     // get search value
     const [searchVal, setSearchVal] = useState("");
-    // i.Avatar
-    // ii.First Name
-    // iii.Last Name
-    // iv.Email
-    // v.Address(Street, Suite, City)
-    // vi.Company Name
-
-    // https://dummyjson.com/users/1
+    // to handle loading
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        //fetching data
         const getUsers = async () => {
             try {
+                setIsLoading(true);
                 const data = await fetch("https://dummyjson.com/users?limit=100", { cache: "no-cache" });
                 const res = await data.json();
-                // console.log(res?.users);
 
                 let allUser = [];
                 // modifying response
@@ -36,6 +32,7 @@ const DisplayUser = () => {
                     })
                 )
                 setUsers(allUser);
+                setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching users:", error);
             }
@@ -62,17 +59,23 @@ const DisplayUser = () => {
                 />
             </div>
             <hr />
-            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-                {
-                    users
-                        .filter((user) =>
-                            user?.name.toLowerCase().includes(searchVal.toLowerCase())
-                        )
-                        .map((user) => (
-                            <UserInfo key={user?.id} value={user} />
-                        ))
-                }
-            </div>
+            {
+                isLoading && <Loading />
+            }
+            {
+                !isLoading &&
+                <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+                    {
+                        users
+                            .filter((user) =>
+                                user?.name.toLowerCase().includes(searchVal.toLowerCase())
+                            )
+                            .map((user) => (
+                                <UserInfo key={user?.id} value={user} />
+                            ))
+                    }
+                </div>
+            }
         </div>
     );
 };
