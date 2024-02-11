@@ -30,7 +30,6 @@ UserInfo.propTypes = {
     value: PropTypes.shape({
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         company: PropTypes.string.isRequired,
