@@ -34,7 +34,6 @@ const EachUser = () => {
         getData();
     }, [])
 
-    // console.log(user);
 
     return (
         <div className="m-5 flex flex-col gap-4">
@@ -45,19 +44,23 @@ const EachUser = () => {
             }
 
             {
-                !isLoading && <h2>Hello User : {user?.name}</h2>
+                !isLoading && <h2 className="font-bold">Hello! {user?.name}</h2>
             }
 
             {
                 !isLoading &&
-                <div className='flex flex-col rounded-md shadow p-4 gap-2'>
-                    <img className='w-1/6 rounded-lg shadow m-auto animate-bounce mt-2' src={user?.image} alt="user-image" />
-                    <p>Name: {user?.name}</p>
-                    <p>Email: {user?.email}</p>
-                    <p>Company Name: {user?.company}</p>
-                    <p>Address: {user?.address?.address}, {user?.address?.city}, {user?.address?.state}, {user?.address?.postalCode}.</p>
+                <div className='flex flex-col sm:flex-col md:flex-col lg:flex-row lg:items-center lg:justify-center xl:flex-row xl:items-center xl:justify-center rounded-md shadow p-4 gap-2'>
+                    <div>
+                        <img className='w-1/4 rounded-lg shadow mx-auto animate-bounce my-10 lg:w-1/2 xl:w-1/2' src={user?.image} alt="user-image" />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                        <p>Name: {user?.name}</p>
+                        <p>Email: {user?.email}</p>
+                        <p>Company Name: {user?.company}</p>
+                        <p>Address: {user?.address?.address}, {user?.address?.city}, {user?.address?.state}, {user?.address?.postalCode}.</p>
 
-                    <button onClick={() => navigate("/")} className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mx-auto">Go Back</button>
+                        <button onClick={() => navigate("/")} className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mx-auto">Go Back</button>
+                    </div>
                 </div>
             }
         </div>

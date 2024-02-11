@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UserInfo from "./UserInfo";
 import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const DisplayUser = () => {
     // to set usersData
@@ -10,6 +11,9 @@ const DisplayUser = () => {
     const [searchVal, setSearchVal] = useState("");
     // to handle loading
     const [isLoading, setIsLoading] = useState(false);
+
+    // to navigate routes
+    const navigate = useNavigate();
 
     useEffect(() => {
         //fetching data
@@ -40,10 +44,16 @@ const DisplayUser = () => {
         getUsers();
     }, [])
 
+    // console.log(users);
+
     return (
         <div className="m-5 flex flex-col gap-4">
             <h1 className="text-3xl font-bold">Users List</h1>
             <hr />
+            <div className="flex justify-end">
+                <button className="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 border-2 border-indigo-600 flex items-center gap-2" onClick={() => navigate("/addUser")}>Add User <span className="text-2xl">+</span></button>
+            </div>
+
             <div>
                 <label htmlFor="price" className="block text-lg leading-6 text-gray-900 text-left mb-2 font-bold">
                     Search User:
@@ -59,6 +69,7 @@ const DisplayUser = () => {
                 />
             </div>
             <hr />
+
             {
                 isLoading && <Loading />
             }

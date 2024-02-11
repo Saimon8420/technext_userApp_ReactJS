@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import DisplayUser from "./components/AllUser/DisplayUser";
 import NotFound from "./components/NotFound/NotFound";
 import EachUser from "./components/EachUser/EachUser";
+import AddUser from "./components/AddUser/AddUser";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
 
         <Route path="/user/:userId" element={<EachUser />}></Route>
 
-        <Route path="*" element={<NotFound />}></Route>
+        <Route path="/addUser" element={<AddUser />}></Route>
 
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>
   )
